@@ -1,4 +1,4 @@
-package com.training.cryptotracker.util
+package com.training.cryptotracker.core.presentation.util
 
 import com.training.cryptotracker.R
 

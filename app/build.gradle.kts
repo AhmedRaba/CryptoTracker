@@ -21,12 +21,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://api.coincap.io/v2/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"https://api.coincap.io/v2/\"")
         }
     }
     compileOptions {
@@ -38,6 +42,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -68,15 +73,17 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //Koin
-    implementation ("io.insert-koin:koin-androidx-compose:4.0.0")
-    implementation ("io.insert-koin:koin-core:4.0.0")
-    implementation ("io.insert-koin:koin-android:4.0.0")
+    implementation("io.insert-koin:koin-androidx-compose:4.0.0")
+    implementation("io.insert-koin:koin-core:4.0.0")
+    implementation("io.insert-koin:koin-android:4.0.0")
 
     //Ktor
-    implementation ("io.ktor:ktor-client-android:3.0.1")
-    implementation ("io.ktor:ktor-client-json:3.0.1")
-    implementation ("io.ktor:ktor-client-serialization:3.0.1")
-    implementation ("io.ktor:ktor-client-logging:3.0.1")
+    implementation("io.ktor:ktor-client-android:3.0.1")
+    implementation("io.ktor:ktor-client-json:3.0.1")
+    implementation("io.ktor:ktor-client-serialization:3.0.1")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.1")
+    implementation("io.ktor:ktor-client-content-negotiation:3.0.1")
+    implementation("io.ktor:ktor-client-logging:3.0.1")
 
 
 }

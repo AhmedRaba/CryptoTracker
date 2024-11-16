@@ -28,6 +28,7 @@ import com.training.cryptotracker.crypto.domain.Coin
 import com.training.cryptotracker.crypto.presentation.models.CoinUi
 import com.training.cryptotracker.crypto.presentation.models.toCoinUi
 import com.training.cryptotracker.ui.theme.CryptoTrackerTheme
+import com.training.cryptotracker.ui.theme.greenBackground
 
 @Composable
 fun CoinListItem(
@@ -35,11 +36,7 @@ fun CoinListItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val contentColor = if (isSystemInDarkTheme()) {
-        Color.White
-    } else {
-        Color.Black
-    }
+
     Row(
         modifier = modifier
             .clickable(onClick = onClick)
@@ -50,7 +47,7 @@ fun CoinListItem(
         Icon(
             imageVector = ImageVector.vectorResource(id = coinUi.iconRes),
             contentDescription = coinUi.name,
-            tint = MaterialTheme.colorScheme.primary,
+            tint = greenBackground,
             modifier = Modifier.size(85.dp)
         )
         Column(
@@ -61,13 +58,13 @@ fun CoinListItem(
                 text = coinUi.symbol,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = contentColor
+                color = MaterialTheme.colorScheme.onBackground
             )
             Text(
                 text = coinUi.name,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Light,
-                color = contentColor
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
 
@@ -79,7 +76,7 @@ fun CoinListItem(
                 text = "$ ${coinUi.priceUsd.formatted}",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = contentColor
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Spacer(modifier = Modifier.height(8.dp))

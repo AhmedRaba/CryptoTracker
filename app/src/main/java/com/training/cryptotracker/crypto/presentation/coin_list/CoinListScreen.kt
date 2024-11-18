@@ -1,6 +1,5 @@
 package com.training.cryptotracker.crypto.presentation.coin_list
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +24,7 @@ fun CoinListScreen(
     state: CoinListState,
     modifier: Modifier = Modifier,
 ) {
+
 
     if (state.isLoading) {
         Box(
@@ -61,7 +61,8 @@ private fun CoinListScreenList() {
                 coins = (1..100).map {
                     previewCoin.copy(id = it.toString())
                 }
-            ), modifier = Modifier
+            ),
+            modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
         )
     }

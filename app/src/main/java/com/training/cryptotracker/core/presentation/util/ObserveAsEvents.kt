@@ -21,7 +21,7 @@ fun <T> ObserveAsEvents(
     LaunchedEffect(lifeCycleOwner, key1, key2) {
         lifeCycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             withContext(Dispatchers.Main.immediate) {
-                events.collect(onEvent )
+                events.collect(onEvent)
             }
         }
 

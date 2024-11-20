@@ -1,7 +1,13 @@
 package com.training.cryptotracker.crypto.data.mappers
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.training.cryptotracker.crypto.data.networking.dto.CoinDto
+import com.training.cryptotracker.crypto.data.networking.dto.CoinPriceDto
 import com.training.cryptotracker.crypto.domain.Coin
+import com.training.cryptotracker.crypto.domain.CoinPrice
+import java.time.Instant
+import java.time.ZoneId
 
 fun CoinDto.toCoin(): Coin{
     return Coin(
@@ -12,5 +18,16 @@ fun CoinDto.toCoin(): Coin{
         marketCapUsd = marketCapUsd,
         priceUsd = priceUsd,
         changePercent24Hr = changePercent24Hr
+    )
+}
+
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun CoinPriceDto.toCoinPrice(): CoinPrice {
+    return CoinPrice(
+        priceUsd = priceUsd,
+        time = Instant
+            .ofEpochSecond(time)
+            .atZone(ZoneId.of("UTC"))
     )
 }

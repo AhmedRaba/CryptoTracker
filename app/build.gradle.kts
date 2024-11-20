@@ -88,5 +88,7 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:3.0.1")
     implementation("io.ktor:ktor-client-logging:3.0.1")
 
+    implementation ("androidx.compose.material3.adaptive:adaptive-navigation:1.0.0")
+
 
 }

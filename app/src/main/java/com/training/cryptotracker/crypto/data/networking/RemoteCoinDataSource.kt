@@ -1,16 +1,24 @@
 package com.training.cryptotracker.crypto.data.networking
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.training.cryptotracker.core.data.networking.constructUrl
 import com.training.cryptotracker.core.data.networking.safeCall
 import com.training.cryptotracker.core.domain.NetworkError
 import com.training.cryptotracker.core.domain.Result
 import com.training.cryptotracker.core.domain.map
 import com.training.cryptotracker.crypto.data.mappers.toCoin
+import com.training.cryptotracker.crypto.data.mappers.toCoinPrice
+import com.training.cryptotracker.crypto.data.networking.dto.CoinHistoryDto
 import com.training.cryptotracker.crypto.data.networking.dto.CoinsResponseDto
 import com.training.cryptotracker.crypto.domain.Coin
 import com.training.cryptotracker.crypto.domain.CoinDataSource
+import com.training.cryptotracker.crypto.domain.CoinPrice
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class RemoteCoinDataSource(
     private val httpClient: HttpClient,
@@ -22,6 +30,36 @@ class RemoteCoinDataSource(
             )
         }.map { response ->
             response.data.map { it.toCoin() }
+
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun getCoinHistory(
+        coinId: String,
+        start: ZonedDateTime,
+        end: ZonedDateTime,
+    ): Result<List<CoinPrice>, NetworkError> {
+        val startMillis = start
+            .withZoneSameInstant(ZoneId.of("UTC"))
+            .toInstant()
+            .toEpochMilli()
+
+        val endMillis = end
+            .withZoneSameInstant(ZoneId.of("UTC"))
+            .toInstant()
+            .toEpochMilli()
+
+        return safeCall<CoinHistoryDto> {
+            httpClient.get(
+                urlString = constructUrl("/assets/$coinId/history")
+            ) {
+                parameter("interval", "h6")
+                parameter("start", startMillis)
+                parameter("end", endMillis)
+            }
+        }.map { response ->
+            response.data.map { it.toCoinPrice() }
 
         }
     }
